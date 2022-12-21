@@ -1,36 +1,48 @@
-import React, { useState, useEffect, useRef } from "react"
-import { MemoApp } from "./components/MemoApp";
+import React, { useState, useReducer} from "react"
 // import logo from './logo.svg';
 
 import './App.css';
 
+const ACTIONS = {
+  ADD_TO_DO : "add-todo"
+}
+
+const  reducer = (todos,action) => {
+  switch (action.type){
+    case ACTIONS.ADD_TO_DO:
+      return [...todos, newtodo(action.payload.name)]
+
+      default: return todos
+  } 
+    
+
+}
+
+const newtodo = (name) => {
+return{id:Date.now(), name:name, complete: false}
+}
 function App() {
 
+  const [todos, dispatch]  = useReducer(reducer,[])
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const inputRef = useRef();
+  const[name,setName] = useState("")
 
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    dispatch({ type:ACTIONS.ADD_TO_DO, payload:{name:name}}, )
+    setName("")
   }
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize)
-
-    return (window.removeEventListener("resize", handleResize))
-
-  }, [])
-
-  return (
-    <div className="App">
-
-      <input ref={inputRef} ></input>
-      <button onClick={() => { inputRef.current.focus() }}>Focus</button>
-
-      <p><span>{windowWidth}</span></p>
-      <MemoApp/>
-    </div>
-  );
+console.log(todos)
+    return(
+      <div className="App">
+        <form onSubmit={handleSubmit}>
+          <label>Something</label>
+         <input value={name} type="text" onChange={ e => setName(e.target.value)} />
+        </form>
+      
+      </div>
+    );
 }
 
 export default App;

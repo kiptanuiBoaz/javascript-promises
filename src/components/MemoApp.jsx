@@ -1,7 +1,7 @@
-import React from 'react'
+// import React from 'react'
 
-export const MemoApp = () => {
-  return (
-    <div>MemoApp</div>
-  )
-}
+// export const MemoApp = () => {
+//   return (
+//     <div>MemoApp</div>
+//   )
+// }
